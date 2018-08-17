@@ -6,18 +6,15 @@ remove_action('wp_head', 'feed_links', 2); // минус ссылки на ос�
 remove_action('wp_head', 'rsd_link');  // сервис Really Simple Discovery
 remove_action('wp_head', 'wlwmanifest_link'); // Windows Live Writer
 remove_action('wp_head', 'wp_generator');  // скрыть версию wordpress
+remove_action('wp_head', 'index_rel_link');
+add_filter('xmlrpc_enabled', '__return_false');
+
 // Удаляем meta name generator отовсюду
 function wp_remove_version()
 {
 	return '';
 }
 add_filter('the_generator', 'wp_remove_version');
-
-remove_action('wp_head', 'start_post_rel_link', 10, 0);
-remove_action('wp_head', 'index_rel_link');
-remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
-remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);
-add_filter('xmlrpc_enabled', '__return_false');
 
 
 /* --------------------------------------------------------------------------
@@ -73,18 +70,6 @@ function disable_emojis_remove_dns_prefetch($urls, $relation_type)
 remove_action( 'xmlrpc_rsd_apis', 'rest_output_rsd' );
 remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
 remove_action( 'template_redirect', 'rest_output_link_header', 11 );
-
-// Удаляю H2 из шаблона пагинации
-add_filter('navigation_markup_template', 'my_navigation_template', 10, 2);
-function my_navigation_template($template, $class)
-{
-	return '
-	<nav class="navigation %1$s" role="navigation">
-		<div class="nav-links">%3$s</div>
-	</nav>
-	';
-}
-
 
 /* --------------------------------------------------------------------------
  * Удалить H2 из шаблона пагинации
