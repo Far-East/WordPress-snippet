@@ -88,7 +88,10 @@ function my_navigation_template($template, $class)
  *  Отключение сжатия JPEG изображений
  * -------------------------------------------------------------------------- */
 
-add_filter('jpeg_quality', create_function('', 'return 100;'));
+add_filter( 'jpeg_quality', 'filter_function_jpeg' );
+function filter_function_jpeg( $quality ) {  
+	return 100;
+}
 
 
 /* --------------------------------------------------------------------------
