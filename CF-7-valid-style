@@ -3,13 +3,14 @@ span .wpcf7-not-valid {
 }
 
 span.wpcf7-not-valid-tip {
-	font-size: .8rem !important;
+	font-size: 13px !important;
 }
 
 div.wpcf7-validation-errors {
 	background: #f8d7da;
 	border: 1px solid #f5c6cb;
 	color: #721c24;
+	font-size: 14px;
 }
 
 div.wpcf7-response-output {
