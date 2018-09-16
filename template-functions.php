@@ -139,18 +139,19 @@ add_filter('widget_text', 'do_shortcode');
 /* --------------------------------------------------------------------------
  *  Ссылка на разработчика сайта
  * -------------------------------------------------------------------------- */
-
-function wp_admin_bar_new_link()
-{
+function custom_toolbar() {
 	global $wp_admin_bar;
-	$wp_admin_bar->add_menu(array(
-		'id' => 'wp-admin-bar-new-link',
-		'title' => __('Разработчик сайта'),
-		'href' => 'https://svsites.ru/portfolio/'
-	));
+	
+	$args = array(
+		'id'     => 'wp-admin-bar-new-link',
+		'title'  => __( 'Разработчик сайта', 'text_domain' ),
+		'href'   => 'https://svsites.ru/portfolio/',
+		'group'  => false,
+	);
+	$wp_admin_bar->add_menu( $args );
+	
 }
-
-add_action('wp_before_admin_bar_render', 'wp_admin_bar_new_link');
+add_action( 'wp_before_admin_bar_render', 'custom_toolbar', 999 );
 
 
 /* --------------------------------------------------------------------------
