@@ -1,6 +1,4 @@
-/* --------------------------------------------------------------------------
- * Удаляем лишнее из шапки
- * -------------------------------------------------------------------------- */
+// REMOVE EXCESS FROM THE HEADER
 remove_action('wp_head','feed_links_extra', 3); // убирает ссылки на rss категорий
 remove_action('wp_head','feed_links', 2); // минус ссылки на основной rss и комментарии
 remove_action('wp_head','rsd_link');  // сервис Really Simple Discovery
@@ -18,10 +16,7 @@ function wp_remove_version()
 }
 add_filter('the_generator', 'wp_remove_version');
 
-
-/* --------------------------------------------------------------------------
- * Отключаем Emoji
- * -------------------------------------------------------------------------- */
+// DISABLE EMOJIS
 function disable_emojis()
 {
 	remove_action('wp_head', 'print_emoji_detection_script', 7);
@@ -64,18 +59,12 @@ function disable_emojis_remove_dns_prefetch($urls, $relation_type)
 	return $urls;
 }
 
-
-/* --------------------------------------------------------------------------
- * Отключаем REST API
- * -------------------------------------------------------------------------- */
-// Remove REST API info from head and headers
+// DISABLE REST API LINK
 remove_action( 'xmlrpc_rsd_apis', 'rest_output_rsd' );
 remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
 remove_action( 'template_redirect', 'rest_output_link_header', 11 );
 
-/* --------------------------------------------------------------------------
- * Удалить H2 из шаблона пагинации
- * -------------------------------------------------------------------------- */
+// REMOVE H2 FROM THE PAGINATION TEMPLATE
 add_filter('navigation_markup_template', 'my_navigation_template', 10, 2);
 function my_navigation_template($template, $class)
 {
@@ -86,78 +75,91 @@ function my_navigation_template($template, $class)
 	';
 }
 
-/* --------------------------------------------------------------------------
- *  Отключение сжатия JPEG изображений
- * -------------------------------------------------------------------------- */
-
-add_filter( 'jpeg_quality', 'filter_function_jpeg' );
-function filter_function_jpeg( $quality ) {  
+// DISCONNECT THE COMPRESSION OF MEDIAFILES
+add_filter('jpeg_quality', 'filter_function_jpeg');
+function filter_function_jpeg($quality)
+{
 	return 100;
 }
 
-
-/* --------------------------------------------------------------------------
- *  Изменить правило вывода заголовков в категориях и метках
- * -------------------------------------------------------------------------- */
-
+// CHANGE THE RULE FOR DISPLAYING HEADINGS IN TAXINIMIES
 add_filter('get_the_archive_title', 'artabr_remove_name_cat');
 function artabr_remove_name_cat($title)
 {
 	if (is_category()) {
 		$title = single_cat_title('', false);
-	} elseif (is_tag()) {
+	} 
+	elseif (is_tag()) {
 		$title = single_tag_title('', false);
 	}
 	return $title;
 }
 
-
-/* --------------------------------------------------------------------------
- *  Длина и скобки в анонсе
- * -------------------------------------------------------------------------- */
-
-// Длина анонса
+//  LENGTH POST LOOP
 function new_excerpt_length($length)
 {
 	return 60;
 }
-
 add_filter('excerpt_length', 'new_excerpt_length');
-// Убираем квадратные скобки
+// Remove the square brackets
 add_filter('excerpt_more', function ($more) {
 	return '...';
 });
 
-
-/* --------------------------------------------------------------------------
- *  Выполнение шорткодов в текстовых виджетах
- * -------------------------------------------------------------------------- */
-
+// RUNNING SHORTCODES IN TEXT WIDGETS
 add_filter('widget_text', 'do_shortcode');
 
-
-/* --------------------------------------------------------------------------
- *  Ссылка на разработчика сайта
- * -------------------------------------------------------------------------- */
-function custom_toolbar() {
+// DEVELOPER OF THE SITE LINK
+function custom_toolbar()
+{
 	global $wp_admin_bar;
 	
 	$args = array(
-		'id'     => 'wp-admin-bar-new-link',
-		'title'  => __( 'Разработчик сайта', 'text_domain' ),
-		'href'   => 'https://svsites.ru/portfolio/',
-		'group'  => false,
+		'id' => 'wp-admin-bar-new-link',
+		'title' => __('Разработчик сайта', 'text_domain'),
+		'href' => 'https://svsites.ru/portfolio/',
+		'group' => false,
 	);
-	$wp_admin_bar->add_menu( $args );
+	$wp_admin_bar->add_menu($args);
 	
 }
-add_action( 'wp_before_admin_bar_render', 'custom_toolbar', 999 );
 
+add_action('wp_before_admin_bar_render', 'custom_toolbar', 999);
 
-/* --------------------------------------------------------------------------
- * Убираем вкладку комменты из админки, если не нужны комментарии
- * -------------------------------------------------------------------------- */
+// CUSTOM TEMPLATE BY DEFAULT
+function hjs_default_page_template() {
+	global $post;
+	if ( 'post' == $post->post_type
+		&& 0 != count( get_page_templates( $post ) )
+		&& get_option( 'page_for_posts' ) != $post->ID
+		&& '' == $post->page_template
+	) {
+		$post->page_template = "general-page.php";
+	}
+}
+add_action('add_meta_boxes', 'hjs_default_page_template', 1);
 
+//ADD IMAGE SIZE FO ANONS AND UPDATE LARGE SIZE
+add_image_size( 'anons-size', 410, 280, true );
+update_option( 'large_size_w', 1170 );
+update_option( 'large_size_h', 460 );
+update_option( 'large_crop', 1 );
+if ( ! function_exists( 'fw_showimagesizes' ) ) {
+	function fw_showimagesizes($sizes) {
+		$sizes['anons-size'] = 'Для Галереи!!!';
+		return $sizes;
+	}
+	add_filter('image_size_names_choose', 'fw_showimagesizes');
+}
+
+// REMOVE GOOGLE FONTS
+function remove_default_stylesheet() {
+	wp_deregister_style('astra-google-fonts');
+}
+
+add_action('wp_enqueue_scripts', 'remove_default_stylesheet', 20);
+
+// WE KEEP TABLET OF COMMENTS FROM ADMIN PANEL
 add_action('admin_menu', 'remove_admin_menu');
 function remove_admin_menu()
 {
