@@ -1,3 +1,5 @@
+<?PHP
+
 // REMOVE EXCESS FROM THE HEADER
 remove_action('wp_head','feed_links_extra', 3); // убирает ссылки на rss категорий
 remove_action('wp_head','feed_links', 2); // минус ссылки на основной rss и комментарии
@@ -165,23 +167,4 @@ function remove_admin_menu()
 {
 	remove_menu_page('edit-comments.php'); // Комментарии
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
