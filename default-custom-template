@@ -1,0 +1,12 @@
+// CUSTOM TEMPLATE BY DEFAULT
+function hjs_default_page_template() {
+	global $post;
+	if ( 'post' == $post->post_type
+		&& 0 != count( get_page_templates( $post ) )
+		&& get_option( 'page_for_posts' ) != $post->ID
+		&& '' == $post->page_template
+	) {
+		$post->page_template = "general-page.php";
+	}
+}
+add_action('add_meta_boxes', 'hjs_default_page_template', 1);
