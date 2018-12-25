@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 // REMOVE EXCESS FROM THE HEADER
 remove_action('wp_head','feed_links_extra', 3); // убирает ссылки на rss категорий
@@ -127,19 +127,6 @@ function custom_toolbar()
 }
 
 add_action('wp_before_admin_bar_render', 'custom_toolbar', 999);
-
-// CUSTOM TEMPLATE BY DEFAULT
-function hjs_default_page_template() {
-	global $post;
-	if ( 'post' == $post->post_type
-		&& 0 != count( get_page_templates( $post ) )
-		&& get_option( 'page_for_posts' ) != $post->ID
-		&& '' == $post->page_template
-	) {
-		$post->page_template = "general-page.php";
-	}
-}
-add_action('add_meta_boxes', 'hjs_default_page_template', 1);
 
 //ADD IMAGE SIZE FO ANONS AND UPDATE LARGE SIZE
 add_image_size( 'anons-size', 410, 280, true );
