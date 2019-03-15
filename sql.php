@@ -8,7 +8,7 @@ UPDATE wp_postmeta SET meta_value = REPLACE (meta_value, 'http://site.ru','http:
 define('WP_HOME','http://site.ru');
 define('WP_SITEURL','http://newsite.ru');
 
-// Замена в целой таблице:
+// Шаблон для любых строк в отдельной таблице:
 update TABLE_NAME set FIELD_NAME =
 replace(FIELD_NAME, 'Текст для поиска', 'Текст, который нужно заменить');
 
