@@ -155,3 +155,5 @@ function remove_admin_menu()
 	remove_menu_page('edit-comments.php'); // Комментарии
 }
 
+// Отключаем форматирование тегами <p> и <br> Contact Form 7
+add_action( 'wpcf7_autop_or_not', '__return_false' );
