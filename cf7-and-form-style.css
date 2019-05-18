@@ -4,7 +4,7 @@
 	font-size: 1rem;
 	-webkit-box-shadow: none;
 	box-shadow: none;
-	border: 1px solid #ddd;
+	border: 1px solid #fba919;
 	height:50px;
 	padding: 0 20px;
 	width: 100%;
@@ -13,7 +13,7 @@
 .form-control:focus {
 	-webkit-box-shadow: none;
 	box-shadow: none;
-	border-color: #fba919;
+	border-color: #5a7fa1;
 	-webkit-transition: linear 0.5s;
 	transition: linear 0.5s;
 	-moz-transition: linear 0.5s;
@@ -34,7 +34,9 @@
 	color: #495057;
 	opacity: 1;
 }
-
+textarea.form-control  {
+	padding: 10px 20px;
+}
 /*Стили для SELECT*/
 .custom-select {
 	color: #495057;
@@ -118,7 +120,7 @@ span.wpcf7-list-item {
 	border: 0 !important;
 }
 
-/* Тут же для модальки Bootstrap стили
+/*	Modal
 /* -------------------------------------------------------------------------------- */
 .modal-header {
 	display: block !important;
