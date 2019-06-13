@@ -1,6 +1,6 @@
 <?php
 
-// REMOVE EXCESS FROM THE HEADER
+// Удаляю лишние заголовки
 remove_action('wp_head','feed_links_extra', 3); // убирает ссылки на rss категорий
 remove_action('wp_head','feed_links', 2); // минус ссылки на основной rss и комментарии
 remove_action('wp_head','rsd_link');  // сервис Really Simple Discovery
@@ -18,7 +18,7 @@ function wp_remove_version()
 }
 add_filter('the_generator', 'wp_remove_version');
 
-// DISABLE EMOJIS
+// Отключаю emoji
 function disable_emojis()
 {
 	remove_action('wp_head', 'print_emoji_detection_script', 7);
@@ -61,12 +61,12 @@ function disable_emojis_remove_dns_prefetch($urls, $relation_type)
 	return $urls;
 }
 
-// DISABLE REST API LINK
+// Отключаю REST API ссылки
 remove_action( 'xmlrpc_rsd_apis', 'rest_output_rsd' );
 remove_action( 'wp_head', 'rest_output_link_wp_head', 10 );
 remove_action( 'template_redirect', 'rest_output_link_header', 11 );
 
-// REMOVE H2 FROM THE PAGINATION TEMPLATE
+// Заменяю заголовок H2 в навигации блога
 add_filter('navigation_markup_template', 'my_navigation_template', 10, 2);
 function my_navigation_template($template, $class)
 {
@@ -77,14 +77,14 @@ function my_navigation_template($template, $class)
 	';
 }
 
-// DISCONNECT THE COMPRESSION OF MEDIAFILES
+// Настройка сжатия медиафайлов
 add_filter('jpeg_quality', 'filter_function_jpeg');
 function filter_function_jpeg($quality)
 {
 	return 100;
 }
 
-// CHANGE THE RULE FOR DISPLAYING HEADINGS IN TAXINIMIES
+// Изменяю правила вывода заголовков в категориях и метках
 add_filter('get_the_archive_title', 'artabr_remove_name_cat');
 function artabr_remove_name_cat($title)
 {
@@ -97,7 +97,7 @@ function artabr_remove_name_cat($title)
 	return $title;
 }
 
-//  LENGTH POST LOOP
+// Длина анонса
 function new_excerpt_length($length)
 {
 	return 60;
@@ -108,10 +108,10 @@ add_filter('excerpt_more', function ($more) {
 	return '...';
 });
 
-// RUNNING SHORTCODES IN TEXT WIDGETS
+// Запуск шорткода в html виджете
 add_filter('widget_text', 'do_shortcode');
 
-// DEVELOPER OF THE SITE LINK
+// Ссылка на разработчика
 function custom_toolbar()
 {
 	global $wp_admin_bar;
@@ -128,7 +128,7 @@ function custom_toolbar()
 
 add_action('wp_before_admin_bar_render', 'custom_toolbar', 999);
 
-//ADD IMAGE SIZE FO ANONS AND UPDATE LARGE SIZE
+// Добавляю размер изображения и обновляю полный размер
 add_image_size( 'anons-size', 410, 280, true );
 update_option( 'large_size_w', 1170 );
 update_option( 'large_size_h', 460 );
@@ -141,14 +141,14 @@ if ( ! function_exists( 'fw_showimagesizes' ) ) {
 	add_filter('image_size_names_choose', 'fw_showimagesizes');
 }
 
-// REMOVE GOOGLE FONTS
+// Отключаю шрифты Google
 function remove_default_stylesheet() {
 	wp_deregister_style('astra-google-fonts');
 }
 
 add_action('wp_enqueue_scripts', 'remove_default_stylesheet', 20);
 
-// WE KEEP TABLET OF COMMENTS FROM ADMIN PANEL
+// Отключаю вкладку комментарии в админпанели
 add_action('admin_menu', 'remove_admin_menu');
 function remove_admin_menu()
 {
