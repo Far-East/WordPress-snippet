@@ -81,6 +81,10 @@ function my_navigation_template($template, $class)
 	';
 }
 
+// Отключить загрузку скрипта wp-embed.min.js
+remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
+remove_action( 'wp_head', 'wp_oembed_add_host_js' );
+
 // Настройка сжатия медиафайлов
 add_filter('jpeg_quality', 'filter_function_jpeg');
 function filter_function_jpeg($quality)
