@@ -70,6 +70,15 @@ remove_action( 'template_redirect', 'rest_output_link_header', 11 );
 remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
 remove_action( 'wp_head', 'wp_oembed_add_host_js' );
 
+// Отключаю загрузку скрипта jquery-migrate
+function remove_jquery_migrate( &$scripts ) {
+ if( !is_admin() ) {
+ $scripts->remove( 'jquery' );
+ $scripts->add( 'jquery', false, array( 'jquery-core' ), '1.12.4' );
+ }
+}
+add_filter( 'wp_default_scripts', 'remove_jquery_migrate' );
+
 // Отключает новый редактор блоков в WordPress (Гутенберг).
 if( 'disable_gutenberg' ){
 	add_filter( 'use_block_editor_for_post_type', '__return_false', 100 );
