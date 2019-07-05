@@ -20,9 +20,9 @@ foreach ($terms as $term) {
 		<?php
 		while ($query->have_posts()) : $query->the_post(); ?>
 
-			<li class="animal-listing" id="post-<?php the_ID(); ?>">
+			<li>
 				<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-				<?php the_post_thumbnail('catalog-size') ?>
+				<?php the_post_thumbnail(); ?>
 			</li>
 		
 		<?php endwhile; ?>
