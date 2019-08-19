@@ -58,3 +58,4 @@ if( 'Сollapse Toolbar' ){
 	}
 	
 }
+
