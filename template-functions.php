@@ -211,3 +211,12 @@ function remove_admin_menu()
  * Отключает форматирование тегами <p> и <br> Contact Form 7
  */
 add_action( 'wpcf7_autop_or_not', '__return_false' );
+
+/**
+ * Загрузка SVG изображений
+ */
+function cc_mime_types($mimes) {
+	$mimes['svg'] = 'image/svg+xml';
+	return $mimes;
+}
+add_filter('upload_mimes', 'cc_mime_types');
