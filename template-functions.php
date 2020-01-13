@@ -87,21 +87,6 @@ function remove_jquery_migrate( &$scripts ) {
 add_filter( 'wp_default_scripts', 'remove_jquery_migrate' );
 
 /**
- * Отключает новый редактор блоков в WordPress (Гутенберг)
- */
-if( 'disable_gutenberg' ){
-	add_filter( 'use_block_editor_for_post_type', '__return_false', 100 );
-	// отключим подключение базовых css стилей для блоков
-	// ВАЖНО! когда выйдут виджеты на блоках или что-то еще, эту строку нужно будет комментировать
-	remove_action( 'wp_enqueue_scripts', 'wp_common_block_scripts_and_styles' );
-	// Move the Privacy Policy help notice back under the title field.
-	add_action( 'admin_init', function(){
-		remove_action( 'admin_notices', [ 'WP_Privacy_Policy_Content', 'notice' ] );
-		add_action( 'edit_form_after_title', [ 'WP_Privacy_Policy_Content', 'notice' ] );
-	} );
-}
-
-/**
  * Отключает шрифты Google
  */
 function remove_default_stylesheet() {
@@ -129,6 +114,13 @@ add_filter('jpeg_quality', 'filter_function_jpeg');
 function filter_function_jpeg($quality)
 {
 	return 100;
+}
+
+/**
+ * Ограничивает загрузку больших изображений
+ */
+function fwbs_big_image_size_threshold() {
+        return 1920;
 }
 
 /**
