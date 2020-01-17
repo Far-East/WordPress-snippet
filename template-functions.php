@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * Растягивает блоки Gutenberg в редакторе
+ */
+add_theme_support( 'align-wide' );
+
+/**
  * Удаляет лишние заголовки
  */
 remove_action('wp_head','feed_links_extra', 3); // убирает ссылки на rss категорий
