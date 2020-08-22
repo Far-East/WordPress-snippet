@@ -194,18 +194,7 @@ if ( ! function_exists( 'fw_showimagesizes' ) ) {
 	}
 	add_filter('image_size_names_choose', 'fw_showimagesizes');
 }
-/**
- * Заполняет поле для атрибута alt на основе заголовка Записи у картинки при её добавлении в контент.
- */
-function change_empty_alt_to_title( $response ) {
-	if ( ! $response['alt'] ) {
-		$response['alt'] = sanitize_text_field( $response['uploadedToTitle'] );
-	}
-	
-	return $response;
-}
 
-add_filter( 'wp_prepare_attachment_for_js', 'change_empty_alt_to_title' );
 /**
  * Отключает вкладку комментарии в админпанели
  */
@@ -221,10 +210,6 @@ function remove_admin_menu()
 add_action( 'wpcf7_autop_or_not', '__return_false' );
 
 /**
- * Загрузка SVG изображений
+ * Отключает wp-sitemap.xml
  */
-function cc_mime_types($mimes) {
-	$mimes['svg'] = 'image/svg+xml';
-	return $mimes;
-}
-add_filter('upload_mimes', 'cc_mime_types');
+add_filter( 'wp_sitemaps_enabled', '__return_false' );
