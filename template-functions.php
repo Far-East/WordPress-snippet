@@ -213,3 +213,10 @@ add_action( 'wpcf7_autop_or_not', '__return_false' );
  * Отключает wp-sitemap.xml
  */
 add_filter( 'wp_sitemaps_enabled', '__return_false' );
+
+/**
+ * Отключает Lazy Loading
+ */
+add_filter('wp_lazy_loading_enabled', '__return_false');
+
+
